@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Hanami Photo Studio Photobooth"
+    >
+
+    <title>Hanami Photo Studio · Photobooth</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=M+PLUS+Rounded+1c:wght@400;500;700&family=Montserrat:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Falling decoration -->
+    <div id="petal-container"></div>
+
+    <main class="photobooth-container">
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <header class="hanami-header">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    ✿
+                </div>
+
+                <div>
+
+                    <h1>
+                        Hanami
+                    </h1>
+
+                    <span class="brand-subtitle">
+                        PHOTO STUDIO
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="header-right">
+
+                <span
+                    class="subtitle"
+                    data-i18n="subtitle"
+                >
+                    Spring · Photobooth
+                </span>
+
+                <select
+                    id="languageSelect"
+                    class="lang-select"
+                    aria-label="Language"
+                >
+
+                    <option value="ja">
+                        🇯🇵 日本語
+                    </option>
+
+                    <option value="en">
+                        🇬🇧 English
+                    </option>
+
+                    <option value="id" selected>
+                        🇮🇩 Bahasa Indonesia
+                    </option>
+
+                </select>
+
+            </div>
+
+        </header>
+
+
+        <!-- =========================
+             CAMERA + PREVIEW
+        ========================== -->
+
+        <section class="camera-preview-wrapper">
+
+            <!-- CAMERA -->
+
+            <div class="camera-area">
+
+                <div class="section-label">
+
+                    <i class="fas fa-camera"></i>
+
+                    <span data-i18n="cameraTitle">
+                        Kamera
+                    </span>
+
+                </div>
+
+
+                <div class="viewfinder">
+
+                    <video
+                        id="video"
+                        autoplay
+                        playsinline
+                        muted
+                    ></video>
+
+
+                    <div
+                        id="captureOverlay"
+                        class="capture-overlay"
+                    ></div>
+
+
+                    <div
+                        id="cameraError"
+                        class="camera-error hidden"
+                    >
+
+                        <i class="fas fa-camera-slash"></i>
+
+                        <span>
+                            Kamera tidak tersedia
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TEMPLATE PREVIEW -->
+
+            <div class="preview-panel">
+
+                <div class="preview-header">
+
+                    <div>
+
+                        <i class="fas fa-eye"></i>
+
+                        <span data-i18n="previewTitle">
+                            Preview Template
+                        </span>
+
+                    </div>
+
+
+                    <span
+                        id="captureStatus"
+                        class="capture-status"
+                    >
+                        0 / 4
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="templatePreview"
+                    class="template-preview"
+                ></div>
+
+
+                <div
+                    id="templateInfo"
+                    class="template-info"
+                >
+                    2 × 2 · 4R · 10.2 × 15.2 cm
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CONTROLS
+        ========================== -->
+
+        <section class="strip-controls">
+
+            <!-- GRID -->
+
+            <div class="control-group">
+
+                <label>
+
+                    <i class="fas fa-table-cells"></i>
+
+                    <span data-i18n="gridLayout">
+                        Template
+                    </span>
+
+                </label>
+
+
+                <div class="grid-selector">
+
+                    <button
+                        class="grid-option"
+                        data-grid="1x1"
+                        type="button"
+                    >
+                        1×1
+                    </button>
+
+
+                    <button
+                        class="grid-option active"
+                        data-grid="2x2"
+                        type="button"
+                    >
+                        2×2
+                    </button>
+
+
+                    <button
+                        class="grid-option"
+                        data-grid="2x3"
+                        type="button"
+                    >
+                        2×3
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- THEME -->
+
+            <div class="control-group">
+
+                <label>
+
+                    <i class="fas fa-palette"></i>
+
+                    <span data-i18n="theme">
+                        Tema
+                    </span>
+
+                </label>
+
+
+                <select
+                    id="themeSelect"
+                    class="theme-select"
+                >
+
+                    <option value="classic">
+                        🌸 Sakura Classic
+                    </option>
+
+                    <option value="clean" selected>
+                        🤍 Minimal Clean
+                    </option>
+
+                    <option value="sakura">
+                        🌸 Sakura Overlap
+                    </option>
+
+                    <option value="retro">
+                        🎞️ Retro Film
+                    </option>
+
+                    <option value="botanical">
+                        🍃 Botanical Garden
+                    </option>
+
+                    <option value="love">
+                        💌 Love Letter
+                    </option>
+
+                    <option value="kawaii">
+                        🧸 Kawaii Memory
+                    </option>
+
+                    <option value="elegant">
+                        ✦ Elegant Black
+                    </option>
+
+                    <option value="night">
+                        🌙 Japanese Night
+                    </option>
+
+                    <option value="polaroid">
+                        📷 Polaroid Scrapbook
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- START -->
+
+            <button
+                class="btn btn-primary"
+                id="startCaptureBtn"
+                type="button"
+            >
+
+                <i class="fas fa-play"></i>
+
+                <span data-i18n="startCapture">
+                    Mulai Foto
+                </span>
+
+            </button>
+
+        </section>
+
+
+        <!-- =========================
+             STATUS
+        ========================== -->
+
+        <div class="camera-note">
+
+            <i class="fas fa-stopwatch"></i>
+
+            <span id="statusText">
+                Pilih template lalu mulai foto
+            </span>
+
+        </div>
+
+
+        <!-- Hidden canvas -->
+        <canvas id="canvas"></canvas>
+
+        <!-- Final composition canvas -->
+        <canvas id="resultCanvas"></canvas>
+
+
+        <!-- =========================
+             RESULT MODAL
+        ========================== -->
+
+        <div
+            id="resultModal"
+            class="result-modal"
+            aria-hidden="true"
+        >
+
+            <div class="result-backdrop"></div>
+
+
+            <div class="result-dialog">
+
+                <button
+                    id="closeResultBtn"
+                    class="modal-close"
+                    type="button"
+                    aria-label="Close"
+                >
+
+                    <i class="fas fa-xmark"></i>
+
+                </button>
+
+
+                <div class="result-header">
+
+                    <span class="result-kicker">
+                        HANAMI PHOTO STUDIO
+                    </span>
+
+
+                    <h2>
+                        Your Memory ✿
+                    </h2>
+
+
+                    <p id="resultInfo">
+                        2 × 2 · 4R
+                    </p>
+
+                </div>
+
+
+                <div class="result-preview">
+
+                    <img
+                        id="resultImage"
+                        src=""
+                        alt="Final photobooth result"
+                    >
+
+                </div>
+
+
+                <!-- EMAIL PANEL -->
+
+                <div
+                    id="emailPanel"
+                    class="email-panel hidden"
+                >
+
+                    <label for="emailInput">
+
+                        <i class="fas fa-envelope"></i>
+
+                        Email tujuan
+
+                    </label>
+
+
+                    <div class="email-row">
+
+                        <input
+                            type="email"
+                            id="emailInput"
+                            placeholder="nama@email.com"
+                            autocomplete="email"
+                        >
+
+
+                        <button
+                            id="sendEmailBtn"
+                            class="btn btn-primary"
+                            type="button"
+                        >
+
+                            <i class="fas fa-paper-plane"></i>
+
+                            Kirim
+
+                        </button>
+
+                    </div>
+
+
+                    <small>
+                        Pengiriman menggunakan aplikasi email
+                        yang terpasang di perangkat.
+                    </small>
+
+
+                    <div
+                        id="emailStatus"
+                        class="email-status"
+                    ></div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="result-actions">
+
+                    <button
+                        id="saveResultBtn"
+                        class="result-btn"
+                        type="button"
+                    >
+
+                        <i class="fas fa-download"></i>
+
+                        <span data-i18n="save">
+                            Save Local
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        id="emailResultBtn"
+                        class="result-btn"
+                        type="button"
+                    >
+
+                        <i class="fas fa-envelope"></i>
+
+                        <span data-i18n="email">
+                            Kirim Email
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        id="printResultBtn"
+                        class="result-btn result-btn-main"
+                        type="button"
+                    >
+
+                        <i class="fas fa-print"></i>
+
+                        <span data-i18n="print">
+                            Print
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        id="resetResultBtn"
+                        class="result-btn result-btn-reset"
+                        type="button"
+                    >
+
+                        <i class="fas fa-rotate-left"></i>
+
+                        <span data-i18n="reset">
+                            Reset
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        id="supportResultBtn"
+                        class="result-btn result-btn-support"
+                        type="button"
+                    >
+
+                        <i class="fas fa-mug-hot"></i>
+
+                        <span data-i18n="support">
+                            Support Hanami
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             SUPPORT MODAL
+        ========================== -->
+
+        <div
+            id="supportModal"
+            class="support-modal"
+            aria-hidden="true"
+        >
+
+            <div class="support-backdrop"></div>
+
+
+            <div class="support-dialog">
+
+                <button
+                    id="closeSupportBtn"
+                    class="support-close"
+                    type="button"
+                    aria-label="Close"
+                >
+
+                    <i class="fas fa-xmark"></i>
+
+                </button>
+
+
+                <div class="support-icon">
+                    ☕
+                </div>
+
+
+                <span class="support-kicker">
+                    HANAMI PHOTO STUDIO
+                </span>
+
+
+                <h2 data-i18n="supportTitle">
+                    Support Hanami
+                </h2>
+
+
+                <p data-i18n="supportDescription">
+                    Suka dengan photobooth ini? Dukungan kamu membantu kami mengembangkan fitur dan template baru.
+                </p>
+
+
+                <a
+                    id="saweriaSupportBtn"
+                    class="support-saweria-btn"
+                    href="https://saweria.co/Tachi92"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <i class="fas fa-heart"></i>
+
+                    <span data-i18n="supportViaSaweria">
+                        Support via Saweria
+                    </span>
+
+                </a>
+
+
+                <small data-i18n="supportThanks">
+                    Terima kasih sudah mendukung Hanami ✿
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             FOOTER
+        ========================== -->
+
+        <footer>
+
+            <span>
+                ✿ Hanami Photo Studio ✿
+            </span>
+
+            <small>
+                Memories captured beautifully
+            </small>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
